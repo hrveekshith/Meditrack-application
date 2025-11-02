@@ -29,6 +29,7 @@ public class AppointmentService{
 
     public Appointment updateAppointment(Long id,Appointment updated){
         Appointment existing = getAppointmntById(id);
+        existing.setPatientName(updated.getPatientName());
         existing.setDoctorName(updated.getDoctorName());
         existing.setTime(updated.getTime());
         existing.setDate(updated.getDate());

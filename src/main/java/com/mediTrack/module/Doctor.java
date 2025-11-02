@@ -11,6 +11,7 @@ import  lombok.*;
 @Builder
 public class Doctor{
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,6 +25,7 @@ public class Doctor{
     private String email;
 
     @NotBlank(message = "Doctor phone number is required")
+    @Size(min=10,max=10,message = "Phone number must to 10 digit long")
     private String phoneNum;
 
     @NotBlank(message = "Doctor specification is required")
