@@ -1,19 +1,13 @@
-package com.mediTrack.patient.module;
+package com.mediTrack.patient.dto;
 
 import jakarta.validation.constraints.*;
-import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Patient{
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+public class PatientCreateDTO {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -26,7 +20,7 @@ public class Patient{
     private String email;
 
     @NotNull(message = "Age is required")
-    @Min(0)
+    @Min(value = 0,message = "Age cannot be negative")
     private Integer age;
 
     private String gender;

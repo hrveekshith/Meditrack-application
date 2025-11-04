@@ -1,6 +1,6 @@
 package com.mediTrack.patient.mapper;
 
-import com.mediTrack.dto.patient.PatientCreateDTO;
+import com.mediTrack.patient.dto.PatientCreateDTO;
 import com.mediTrack.patient.module.Patient;
 
 public class PatientMapper{
