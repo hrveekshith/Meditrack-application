@@ -1,8 +1,11 @@
 package com.mediTrack.module;
 
+import com.mediTrack.patient.module.Patient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "prescriptions")
@@ -21,12 +24,20 @@ public class Prescription {
     @NotBlank(message = "Medicine intake duration is required")
     private String duration;
 
-    @ManyToOne
-    @JoinColumn(name = "medicine_id")
-    private  Medicine medicine;
+    @ManyToMany
+    @JoinTable(
+            name = "prescription_medicine",
+            joinColumns = @JoinColumn(name = "prescription_id"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_id")
+    )
+    private List<Medicine> medicineList;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    @OneToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
 }

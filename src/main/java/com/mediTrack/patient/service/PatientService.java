@@ -1,8 +1,10 @@
-package com.mediTrack.service;
+package com.mediTrack.patient.service;
 
 import org.springframework.stereotype.Service;
-import com.mediTrack.module.Patient;
-import com.mediTrack.repository.PatientRepository;
+
+import com.mediTrack.patient.module.Patient;
+import com.mediTrack.patient.repository.PatientRepository;
+
 import java.util.List;
 
 @Service
@@ -39,6 +41,8 @@ public class PatientService{
         existing.setAddress(updated.getAddress());
         existing.setEmail(updated.getEmail());
         existing.setPhoneNumber(updated.getPhoneNumber());
+        existing.setAppointmentList(updated.getAppointmentList());
+        existing.setPrescriptionList(updated.getPrescriptionList());
 
         return  repo.save(existing);
     }

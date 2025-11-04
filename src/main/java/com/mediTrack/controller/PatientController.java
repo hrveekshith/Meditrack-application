@@ -1,9 +1,8 @@
 package com.mediTrack.controller;
 
 import jakarta.validation.Valid;
-import com.mediTrack.module.Patient;
-import com.mediTrack.service.PatientService;
-import org.springframework.http.HttpEntity;
+import com.mediTrack.patient.module.Patient;
+import com.mediTrack.patient.service.PatientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,6 @@
 package  com.mediTrack.module;
 
+import com.mediTrack.patient.module.Patient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -15,11 +16,13 @@ public class Appointment{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Patient name is required")
-    private String patientName;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-    @NotBlank(message = "Doctor name is required")
-    private String doctorName;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Patient.Doctor doctor;
 
     @NotBlank(message = "Date is required")
     private String date;

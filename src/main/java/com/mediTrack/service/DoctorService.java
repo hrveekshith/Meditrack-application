@@ -1,7 +1,7 @@
 package com.mediTrack.service;
 
+import com.mediTrack.patient.module.Patient;
 import org.springframework.stereotype.Service;
-import com.mediTrack.module.Doctor;
 import com.mediTrack.repository.DoctorRepository;
 import java.util.List;
 
@@ -14,26 +14,27 @@ public class DoctorService{
         this.repo = repo;
     }
 
-    public List<Doctor> getAllDoctors(){
+    public List<Patient.Doctor> getAllDoctors(){
         return repo.findAll();
     }
 
-    public Doctor getDoctorById(Long id){
+    public Patient.Doctor getDoctorById(Long id){
         return repo.findById(id).orElseThrow(()->
                 new RuntimeException("Doctor not found by id "+id));
 
     }
 
-    public Doctor addDoctor(Doctor doctor){
+    public Patient.Doctor addDoctor(Patient.Doctor doctor){
         return repo.save(doctor);
     }
 
-    public Doctor updateDoctor(Long id, Doctor doctor){
-        Doctor existing = getDoctorById(id);
+    public Patient.Doctor updateDoctor(Long id, Patient.Doctor doctor){
+        Patient.Doctor existing = getDoctorById(id);
         existing.setAge(doctor.getAge());
         existing.setName(doctor.getName());
         existing.setEmail(doctor.getEmail());
         existing.setSpecification(doctor.getSpecification());
+        existing.setAppointmentList(doctor.getAppointmentList());
         return repo.save(existing);
     }
 

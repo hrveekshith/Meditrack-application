@@ -1,11 +1,11 @@
 package com.mediTrack.controller;
 
+import com.mediTrack.patient.module.Patient;
 import jakarta.validation.Valid;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.mediTrack.service.DoctorService;
-import com.mediTrack.module.Doctor;
+
 import java.util.List;
 
 @RestController
@@ -20,22 +20,22 @@ public class DoctorController{
     }
 
     @GetMapping
-    public List<Doctor> getAllDoctors(){
+    public List<Patient.Doctor> getAllDoctors(){
         return service.getAllDoctors();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> getById(@PathVariable Long id){
+    public ResponseEntity<Patient.Doctor> getById(@PathVariable Long id){
         return ResponseEntity.ok(service.getDoctorById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Doctor> create(@Valid @RequestBody Doctor doctor){
+    public ResponseEntity<Patient.Doctor> create(@Valid @RequestBody Patient.Doctor doctor){
         return ResponseEntity.ok(service.addDoctor(doctor));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> update(@PathVariable Long id,@Valid @RequestBody Doctor doctor){
+    public ResponseEntity<Patient.Doctor> update(@PathVariable Long id, @Valid @RequestBody Patient.Doctor doctor){
         return ResponseEntity.ok(service.updateDoctor(id,doctor));
     }
 

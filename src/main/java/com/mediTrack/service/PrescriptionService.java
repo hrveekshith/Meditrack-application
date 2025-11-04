@@ -32,7 +32,8 @@ public class PrescriptionService{
         existing.setDosage(prescription.getDosage());
         existing.setDuration(prescription.getDuration());
         existing.setPatient(prescription.getPatient());
-        existing.setMedicine(prescription.getMedicine());
+        existing.setMedicineList(prescription.getMedicineList());
+        existing.setAppointment(prescription.getAppointment());
         return repo.save(existing);
     }
 

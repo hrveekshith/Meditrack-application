@@ -26,7 +26,7 @@ public class Medicine{
     @NotNull(message = "Medicine price is required")
     private float price;
 
-    @OneToMany(mappedBy = "medicine",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "medicineList")
     private List<Prescription> prescriptionList;
 
 }
