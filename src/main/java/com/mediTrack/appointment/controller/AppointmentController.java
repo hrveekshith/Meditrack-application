@@ -1,5 +1,9 @@
 package com.mediTrack.appointment.controller;
 
+import com.mediTrack.appointment.dto.AppointmentCreateDTO;
+import com.mediTrack.appointment.dto.AppointmentResponse;
+import com.mediTrack.appointment.dto.AppointmentToList;
+import com.mediTrack.appointment.dto.AppointmentUpdateDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -20,22 +24,22 @@ public class AppointmentController{
     }
 
     @GetMapping
-    public List<Appointment> getAll(){
+    public List<AppointmentToList> getAll(){
         return service.getAllAppointments();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appointment> getById(@PathVariable Long id){
+    public ResponseEntity<AppointmentResponse> getById(@PathVariable Long id){
         return ResponseEntity.ok(service.getAppointmntById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Appointment> create(@Valid @RequestBody Appointment appointment){
+    public ResponseEntity<AppointmentResponse> create(@Valid @RequestBody AppointmentCreateDTO appointment){
         return ResponseEntity.ok(service.createAppointment(appointment));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Appointment> update(@PathVariable Long id, @RequestBody Appointment appointment){
+    public ResponseEntity<AppointmentResponse> update(@PathVariable Long id, @RequestBody AppointmentUpdateDTO appointment){
         return ResponseEntity.ok(service.updateAppointment(id,appointment));
     }
 
