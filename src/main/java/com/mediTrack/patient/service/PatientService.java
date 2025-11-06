@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.mediTrack.patient.module.Patient;
 import com.mediTrack.patient.repository.PatientRepository;
+import com.mediTrack.patient.dto.*;
+import com.mediTrack.patient.mapper.PatientMapper;
 
 import java.util.List;
 
@@ -16,38 +18,42 @@ public class PatientService{
         this.repo = repo;
     }
 
-    public Patient getPatientById(Long id) {
-        return repo.findById(id).orElseThrow(() ->
-                new RuntimeException("Patint not found by id: "+id));
+    public PatientResponseDTO getPatientById(Long id) {
+        Patient patient = repo.findById(id).orElseThrow(()->
+                new RuntimeException("Patient not found by id "+id));
+        PatientResponseDTO patientResponseDTO = PatientMapper.toResponse(patient);
+        return patientResponseDTO;
     }
 
-    public List<Patient>  getAllPatients() {
-        return repo.findAll();
+    public List<PatientListDTO>  getAllPatients() {
+        return repo.findAll()
+                .stream()
+                .map(PatientMapper::toList)
+                .toList();
     }
 
-    public Patient addPatient(Patient patient) {
+    public PatientResponseDTO addPatient(PatientCreateDTO dto) {
+        Patient patient = PatientMapper.toEntity(dto);
         if(repo.existsByEmail(patient.getEmail())) {
-            throw new RuntimeException(("Patient already exists in the given email"+patient.getEmail()));
+            throw new RuntimeException(("Patient already exists in the given email"+dto.getEmail()));
         }
-        return repo.save(patient);
+        Patient saved = repo.save(patient);
+        return PatientMapper.toResponse(saved);
     }
 
-    public Patient updatePatient(Long id,Patient updated) {
-        Patient existing = getPatientById(id);
+    public PatientResponseDTO updatePatient(Long id,PatientUpdateDTO dto) {
+        Patient existing = repo.findById(id)
+                .orElseThrow(()->new RuntimeException("Patient not found by id "+id));
 
-        existing.setName(updated.getName());
-        existing.setAge(updated.getAge());
-        existing.setGender(updated.getGender());
-        existing.setAddress(updated.getAddress());
-        existing.setEmail(updated.getEmail());
-        existing.setPhoneNumber(updated.getPhoneNumber());
-        existing.setAppointmentList(updated.getAppointmentList());
-        existing.setPrescriptionList(updated.getPrescriptionList());
+        PatientMapper.updateEntity(dto,existing);
+        Patient updated = repo.save(existing);
+        return PatientMapper.toResponse(updated);
 
-        return  repo.save(existing);
     }
 
     public void deletePatient(Long id) {
         repo.deleteById(id);
     }
+
+    public void deleteAll(Long id) { repo.deleteAll(); }
 }

@@ -1,9 +1,17 @@
 package com.mediTrack.doctor.service;
 
+import com.mediTrack.doctor.dto.DoctorCreateDTO;
+import com.mediTrack.doctor.dto.DoctorResponseDTO;
+import com.mediTrack.doctor.dto.DoctorToList;
+import com.mediTrack.doctor.dto.DoctorUpdateDTO;
+import com.mediTrack.doctor.mapper.DoctorMapper;
+import com.mediTrack.doctor.module.Doctor;
 import com.mediTrack.patient.module.Patient;
 import org.springframework.stereotype.Service;
 import com.mediTrack.doctor.repository.DoctorRepository;
 import java.util.List;
+
+
 
 @Service
 public class DoctorService{
@@ -14,28 +22,30 @@ public class DoctorService{
         this.repo = repo;
     }
 
-    public List<Patient.Doctor> getAllDoctors(){
-        return repo.findAll();
+    public List<DoctorToList> getAllDoctors(){
+        return repo.findAll().stream()
+                .map(DoctorMapper::toList)
+                .toList();
     }
 
-    public Patient.Doctor getDoctorById(Long id){
-        return repo.findById(id).orElseThrow(()->
+    public DoctorResponseDTO getDoctorById(Long id){
+        Doctor doctor = repo.findById(id).orElseThrow(()->
                 new RuntimeException("Doctor not found by id "+id));
+        return DoctorMapper.toResponse(doctor);
 
     }
 
-    public Patient.Doctor addDoctor(Patient.Doctor doctor){
-        return repo.save(doctor);
+    public DoctorResponseDTO addDoctor(DoctorCreateDTO dto){
+        Doctor doctor = DoctorMapper.toEntity(dto);
+        Doctor saved = repo.save(doctor);
+        return DoctorMapper.toResponse(saved);
     }
 
-    public Patient.Doctor updateDoctor(Long id, Patient.Doctor doctor){
-        Patient.Doctor existing = getDoctorById(id);
-        existing.setAge(doctor.getAge());
-        existing.setName(doctor.getName());
-        existing.setEmail(doctor.getEmail());
-        existing.setSpecification(doctor.getSpecification());
-        existing.setAppointmentList(doctor.getAppointmentList());
-        return repo.save(existing);
+    public DoctorResponseDTO updateDoctor(Long id, DoctorUpdateDTO dto){
+        Doctor doctor = repo.findById(id).orElseThrow(()->
+                new RuntimeException("Doctor not found by id "+id));
+        DoctorMapper.updateEntity(dto,doctor);
+        return DoctorMapper.toResponse(repo.save(doctor));
     }
 
     public void deleteById(Long id){

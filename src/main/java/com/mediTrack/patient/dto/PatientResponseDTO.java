@@ -2,14 +2,12 @@ package com.mediTrack.patient.dto;
 
 import lombok.*;
 
-import com.mediTrack.appointment.dto.AppointmentSummaryDTO;
-import com.mediTrack.prescription.dto.PrescriptionSummaryDTO;
-
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PatientResponseDTO{
 
     private Long id;

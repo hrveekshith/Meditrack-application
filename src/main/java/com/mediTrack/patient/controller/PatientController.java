@@ -1,5 +1,9 @@
 package com.mediTrack.patient.controller;
 
+import com.mediTrack.patient.dto.PatientCreateDTO;
+import com.mediTrack.patient.dto.PatientListDTO;
+import com.mediTrack.patient.dto.PatientResponseDTO;
+import com.mediTrack.patient.dto.PatientUpdateDTO;
 import jakarta.validation.Valid;
 import com.mediTrack.patient.module.Patient;
 import com.mediTrack.patient.service.PatientService;
@@ -20,22 +24,22 @@ public class PatientController {
     }
 
     @GetMapping
-    public List<Patient> getAll() {
+    public List<PatientListDTO> getAll() {
         return service.getAllPatients();
     }
 
     @GetMapping("/{id}")
-    public Patient getById(@PathVariable Long id) {
+    public PatientResponseDTO getById(@PathVariable Long id) {
         return service.getPatientById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Patient> create(@Valid @RequestBody Patient patient) {
+    public ResponseEntity<PatientResponseDTO> create(@Valid @RequestBody PatientCreateDTO patient) {
         return ResponseEntity.ok(service.addPatient(patient));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> update(@PathVariable Long id, @RequestBody Patient patient) {
+    public ResponseEntity<PatientResponseDTO> update(@PathVariable Long id, @RequestBody PatientUpdateDTO patient) {
         return ResponseEntity.ok(service.updatePatient(id,patient));
     }
 

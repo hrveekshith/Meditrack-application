@@ -1,10 +1,14 @@
 package com.mediTrack.doctor.controller;
 
-import com.mediTrack.patient.module.Patient;
+import com.mediTrack.doctor.dto.DoctorCreateDTO;
+import com.mediTrack.doctor.dto.DoctorResponseDTO;
+import com.mediTrack.doctor.dto.DoctorToList;
+import com.mediTrack.doctor.dto.DoctorUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.mediTrack.doctor.service.DoctorService;
+
 
 import java.util.List;
 
@@ -20,22 +24,22 @@ public class DoctorController{
     }
 
     @GetMapping
-    public List<Patient.Doctor> getAllDoctors(){
+    public List<DoctorToList> getAllDoctors(){
         return service.getAllDoctors();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient.Doctor> getById(@PathVariable Long id){
+    public ResponseEntity<DoctorResponseDTO> getById(@PathVariable Long id){
         return ResponseEntity.ok(service.getDoctorById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Patient.Doctor> create(@Valid @RequestBody Patient.Doctor doctor){
+    public ResponseEntity<DoctorResponseDTO> create(@Valid @RequestBody DoctorCreateDTO doctor){
         return ResponseEntity.ok(service.addDoctor(doctor));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient.Doctor> update(@PathVariable Long id, @Valid @RequestBody Patient.Doctor doctor){
+    public ResponseEntity<DoctorResponseDTO> update(@PathVariable Long id, @Valid @RequestBody DoctorUpdateDTO doctor){
         return ResponseEntity.ok(service.updateDoctor(id,doctor));
     }
 

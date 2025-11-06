@@ -1,22 +1,20 @@
-package com.mediTrack.doctor.module;
+package com.mediTrack.doctor.dto;
 
-import com.mediTrack.appointment.module.Appointment;
-import jakarta.persistence.*;
+import com.mediTrack.patient.dto.AppointmentSummaryDTO;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
-import  lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
 
-@Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Doctor{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DoctorCreateDTO{
 
     @NotBlank(message = "Doctor name is required")
     private String name;
@@ -34,6 +32,4 @@ public class Doctor{
     @NotBlank(message = "Doctor specification is required")
     private String specification;
 
-    @OneToMany(mappedBy = "doctor")
-    private List<Appointment> appointmentList;
 }

@@ -1,37 +1,35 @@
 package com.mediTrack.patient.module;
 
-import jakarta.validation.constraints.*;
-import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.*;
+
+import com.mediTrack.prescription.module.Prescription;
+import com.mediTrack.appointment.module.Appointment;
+
+import java.util.List;
+
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Patient{
+public class Patient {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
     private String name;
-
-    @NotBlank(message = "Phone number is required")
-    @Size(min=10,max=10,message = "Phone number must be 10 digits long")
     private String phoneNumber;
-
-    @Email(message = "Invalid email format!")
     private String email;
-
-    @NotNull(message = "Age is required")
-    @Min(0)
     private Integer age;
-
     private String gender;
     private String address;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Prescription> prescriptionList;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointment> appointmentList;
 }
-
-

@@ -1,8 +1,12 @@
 package com.mediTrack.appointment.module;
 
+import com.mediTrack.prescription.module.Prescription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+
+import com.mediTrack.patient.module.Patient;
+import com.mediTrack.doctor.module.Doctor;
 
 @Entity
 @Data
@@ -15,11 +19,13 @@ public class Appointment{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Patient name is required")
-    private String patientName;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-    @NotBlank(message = "Doctor name is required")
-    private String doctorName;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
     @NotBlank(message = "Date is required")
     private String date;
@@ -29,4 +35,7 @@ public class Appointment{
 
     @NotBlank(message = "Status of appointment is required")
     private String appointmentStatus;
+
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    private Prescription prescription;
 }

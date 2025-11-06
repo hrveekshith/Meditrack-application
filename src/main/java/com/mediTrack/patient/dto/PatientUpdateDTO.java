@@ -23,4 +23,5 @@ public class PatientUpdateDTO{
 
     private String gender;
     private String address;
+
 }
