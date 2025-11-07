@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.mediTrack.medicine.repository.MedicineRepository;
 import com.mediTrack.medicine.module.Medicine;
+import com.mediTrack.medicine.dto.*;
+import com.mediTrack.medicine.mapper.MedicineMapper;
 
 import java.util.List;
 
@@ -16,26 +18,28 @@ public class MedicineService{
         this.repo = repo;
     }
 
-    public List<Medicine> getAllMedicine(){
-        return repo.findAll();
+    public List<MedicineToList> getAllMedicine(){
+        return repo.findAll().stream().map(MedicineMapper::toList).toList();
     }
 
-    public Medicine getMedicineById(Long id){
-        return repo.findById(id).orElseThrow(()->
+    public MedicineResponeDTO getMedicineById(Long id){
+        Medicine medicine = repo.findById(id).orElseThrow(()->
                 new RuntimeException("Medicine not found by id: "+id));
+        return  MedicineMapper.toResponse(medicine);
     }
 
-    public Medicine addMedicine(Medicine medicine){
-        return repo.save(medicine);
+    public MedicineResponeDTO addMedicine(MedicineCreateDTO dto){
+        Medicine medicine = MedicineMapper.toEntity(dto);
+        Medicine saved =  repo.save(medicine);
+        return MedicineMapper.toResponse(saved);
     }
 
-    public Medicine updateMedicine(Long id, Medicine medicine){
-        Medicine existing = getMedicineById(id);
-        existing.setName(medicine.getName());
-        existing.setPrice(medicine.getPrice());
-        existing.setManufacturerName(medicine.getManufacturerName());
-        existing.setPrescriptionList(medicine.getPrescriptionList());
-        return repo.save(existing);
+    public MedicineResponeDTO updateMedicine(Long id, MedicineUpdateDTO dto){
+        Medicine existing = repo.findById(id).orElseThrow(()->
+                new RuntimeException("Medicine not found by id: "+id));
+        MedicineMapper.updateEntity(dto,existing);
+        Medicine saved =  repo.save(existing);
+        return MedicineMapper.toResponse(saved);
     }
 
     public void deleteMedicineById(Long id){

@@ -1,5 +1,9 @@
 package com.mediTrack.medicine.controller;
 
+import com.mediTrack.medicine.dto.MedicineCreateDTO;
+import com.mediTrack.medicine.dto.MedicineResponeDTO;
+import com.mediTrack.medicine.dto.MedicineToList;
+import com.mediTrack.medicine.dto.MedicineUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,22 +25,22 @@ public class MedicineController{
     }
 
     @GetMapping
-    public List<Medicine> getAll(){
+    public List<MedicineToList> getAll(){
         return service.getAllMedicine();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Medicine> getById(@PathVariable Long id){
+    public ResponseEntity<MedicineResponeDTO> getById(@PathVariable Long id){
         return ResponseEntity.ok(service.getMedicineById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Medicine> create(@Valid @RequestBody Medicine medicine){
+    public ResponseEntity<MedicineResponeDTO> create(@Valid @RequestBody MedicineCreateDTO medicine){
         return ResponseEntity.ok(service.addMedicine(medicine));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Medicine> update(@PathVariable Long id,@Valid @RequestBody Medicine medicine){
+    public ResponseEntity<MedicineResponeDTO> update(@PathVariable Long id,@Valid @RequestBody MedicineUpdateDTO medicine){
         return ResponseEntity.ok(service.updateMedicine(id,medicine));
     }
 

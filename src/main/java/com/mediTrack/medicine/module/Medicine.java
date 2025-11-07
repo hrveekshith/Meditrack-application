@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Medicine{
 
     @Id
@@ -25,7 +26,7 @@ public class Medicine{
     private String manufacturerName;
 
     @NotNull(message = "Medicine price is required")
-    private float price;
+    private Float price;
 
     @ManyToMany(mappedBy = "medicineList",cascade = CascadeType.ALL)
     private List<Prescription> prescriptionList;
