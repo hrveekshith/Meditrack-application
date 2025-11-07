@@ -1,5 +1,10 @@
 package com.mediTrack.prescription.controller;
 
+import com.mediTrack.prescription.dto.PrescriptionCreateDTO;
+import com.mediTrack.prescription.dto.PrescriptionResponseDTO;
+import com.mediTrack.prescription.dto.PrescriptionToList;
+import com.mediTrack.prescription.dto.PrescriptionUpdateDTO;
+import com.mediTrack.prescription.mapper.PrescriptionMapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +24,22 @@ public class PrescriptionController {
     }
 
     @GetMapping
-    public List<Prescription> getAll(){
-        return service.getAllPrescription();
+    public List<PrescriptionToList> getAll(){
+        return service.getAllPrescription().stream().map(PrescriptionMapper::toList).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Prescription> getById(@PathVariable Long id){
+    public ResponseEntity<PrescriptionResponseDTO> getById(@PathVariable Long id){
         return ResponseEntity.ok(service.getPrescriptionById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Prescription> create(@Valid @RequestBody Prescription prescription) {
+    public ResponseEntity<PrescriptionResponseDTO> create(@Valid @RequestBody PrescriptionCreateDTO prescription) {
         return ResponseEntity.ok(service.addPrescription(prescription));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Prescription> update(@PathVariable Long id, @Valid @RequestBody Prescription prescription) {
+    public ResponseEntity<PrescriptionResponseDTO> update(@PathVariable Long id, @Valid @RequestBody PrescriptionUpdateDTO prescription) {
         return ResponseEntity.ok(service.updatePrescription(id,prescription));
     }
 

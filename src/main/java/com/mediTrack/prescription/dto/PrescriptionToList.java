@@ -1,6 +1,5 @@
 package com.mediTrack.prescription.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PrescriptionUpdateDTO {
-
-    private String dosage;
-    private String duration;
-    private List<Long> medicineList;
-    private Long patientId;
-    private Long doctorId;
-    private Long appointmentId;
+public class PrescriptionToList {
+    private String patientName;
+    private String doctorName;
+    private List<String> medicines;
 }
