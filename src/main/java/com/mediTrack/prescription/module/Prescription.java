@@ -22,10 +22,7 @@ public class Prescription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Medicine dosage is required")
     private String dosage;
-
-    @NotBlank(message = "Medicine intake duration is required")
     private String duration;
 
     @ManyToMany

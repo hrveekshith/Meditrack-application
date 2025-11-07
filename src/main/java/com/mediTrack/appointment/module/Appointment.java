@@ -27,13 +27,8 @@ public class Appointment{
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    @NotBlank(message = "Date is required")
     private String date;
-
-    @NotBlank(message = "Time is required")
     private String time;
-
-    @NotBlank(message = "Status of appointment is required")
     private String appointmentStatus;
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
