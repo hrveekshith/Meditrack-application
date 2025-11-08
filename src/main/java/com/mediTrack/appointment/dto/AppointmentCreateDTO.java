@@ -11,10 +11,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class AppointmentCreateDTO{
-    @NotBlank(message = "Patient id is required")
+    @NotNull(message = "Patient id is required")
     private Long patientId;
 
-    @NotBlank(message = "Doctor id is required")
+    @NotNull(message = "Doctor id is required")
     private Long doctorId;
 
     @NotBlank(message = "Date is required")
